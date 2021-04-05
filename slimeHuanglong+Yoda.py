@@ -1,72 +1,60 @@
-import  pyautogui,webbrowser,time,random
+import  pyautogui,webbrowser,time,random,sys
 
-
-
-fight = 'http://game.granbluefantasy.jp/#quest/supporter/400151/4'
 
 def selectSummon(summonName):
-    print("in SelectSummon()")
     shot = pyautogui.screenshot()
     check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG")
     if check!=None:
-        pyautogui.click(check,duration=0.5)
+        pyautogui.click(check,duration=random.uniform(0.01,0.5))
     while check == None:
         pyautogui.scroll(-100)
         shot = pyautogui.screenshot()
         check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG")
-    pyautogui.click(check)
-
+    pyautogui.click(check,duration=random.uniform(0.01,0.5))
 def clickOK():
-    print("in Clickok()")
-    i=1
     shot = pyautogui.screenshot()
     check = pyautogui.locateCenterOnScreen(".\Screenshot\ok.PNG",confidence=0.5)
     if check!=None:
-        pyautogui.click(check,duration=0.2)
+        pyautogui.click(check,duration=random.uniform(0.01,0.5))
     while check is None:
         pyautogui.scroll(-100)
         shot = pyautogui.screenshot()
         check = pyautogui.locateOnScreen(".\Screenshot\ok.PNG")
-        i+=1
-    pyautogui.click(check)
-
+    pyautogui.click(check,duration=random.uniform(0.01,0.5))
 def summonCall(callSummon):
-    print('in SummonCall')
     pyautogui.screenshot()
     check = pyautogui.locateCenterOnScreen(".\Screenshot\summonTab.PNG")
     while check == None:
         pyautogui.screenshot()
         check = pyautogui.locateCenterOnScreen(".\Screenshot\summonTab.PNG")
     time.sleep(2)
-    pyautogui.click(check)
-    
+    pyautogui.click(check,duration=random.uniform(0.01,0.5))
     check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+callSummon+"Call.PNG")
-    print(check)
     while check == None:
-        print('in Loop')
         pyautogui.screenshot()
         check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+callSummon+"Call.PNG")
-    pyautogui.click(check)
+    pyautogui.click(check,duration=random.uniform(0.01,0.5))
     clickOK()
-
 def attack():
-    print('in Attack')
     pyautogui.screenshot()
     check = pyautogui.locateCenterOnScreen(".\Screenshot\\attack.PNG")
     while check is None:
         pyautogui.screenshot()
         check = pyautogui.locateCenterOnScreen(".\Screenshot\\attack.PNG")
-    pyautogui.click(check)
-
+    pyautogui.click(check,duration=random.uniform(0.01,0.5))
 #============================================================
 #Summon to call
 callSummon = "huanglong"
 #Round
-count = 3
+count = 40
+#Link
+fight = 'http://game.granbluefantasy.jp/#quest/supporter/400181/4'
 #============================================================
 i=0
-while i <= count:
-    time.sleep(3)
+while i<=count:
+    sys.stdout.write("Running Round "+str(i+1)+"\n")
+    while pyautogui.locateCenterOnScreen(".\Screenshot\\vee.PNG") == None:
+        pyautogui.locateCenterOnScreen(".\Screenshot\\vee.PNG")
     pyautogui.click(pyautogui.locateCenterOnScreen(".\Screenshot\\vee.PNG"),duration=0.5)
     selectSummon(callSummon)
     clickOK()
@@ -79,8 +67,8 @@ while i <= count:
     attack()
     time.sleep(2)
     pyautogui.click(pyautogui.locateCenterOnScreen(".\Screenshot\\back.PNG"))
-
     while pyautogui.locateCenterOnScreen(".\Screenshot\end.PNG") is None:
-        print('in Check END')
         pyautogui.screenshot()
     webbrowser.open(fight, new=2)
+    i+=1
+    sys.stdout.write("Round "+str(i)+" Finished\n")
