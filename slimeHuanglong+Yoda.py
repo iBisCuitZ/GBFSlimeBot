@@ -1,45 +1,36 @@
 import  pyautogui,webbrowser,time,random,sys
 
 
-def selectName(NameName):
-    shot = pyautogui.screenshot()
-    check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+NameName+".PNG")
+def selectSummon(summonName):
+    check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG")
     if check!=None:
         pyautogui.click(check,duration=random.uniform(0.01,0.5))
     while check == None:
         pyautogui.scroll(-100)
-        shot = pyautogui.screenshot()
-        check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+NameName+".PNG")
+        check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG")
     pyautogui.click(check,duration=random.uniform(0.01,0.5))
-def clickOK():
-    shot = pyautogui.screenshot()
+def clickOK(): 
     check = pyautogui.locateCenterOnScreen(".\Screenshot\ok.PNG",confidence=0.5)
     if check!=None:
         pyautogui.click(check,duration=random.uniform(0.01,0.5))
     while check is None:
         pyautogui.scroll(-100)
-        shot = pyautogui.screenshot()
         check = pyautogui.locateOnScreen(".\Screenshot\ok.PNG")
     pyautogui.click(check,duration=random.uniform(0.01,0.5))
-def NameCall(Name):
-    pyautogui.screenshot()
-    check = pyautogui.locateCenterOnScreen(".\Screenshot\NameTab.PNG")
+def summonCall(summon):
+    check = pyautogui.locateCenterOnScreen(".\Screenshot\summonTab.PNG")
     while check == None:
-        pyautogui.screenshot()
-        check = pyautogui.locateCenterOnScreen(".\Screenshot\NameTab.PNG")
+        check = pyautogui.locateCenterOnScreen(".\Screenshot\summonTab.PNG")
     time.sleep(2)
     pyautogui.click(check,duration=random.uniform(0.01,0.5))
-    check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+Name+"Call.PNG")
+    check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+summon+"Call.PNG")
     while check == None:
-        pyautogui.screenshot()
-        check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+Name+"Call.PNG")
+        check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+summon+"Call.PNG")
     pyautogui.click(check,duration=random.uniform(0.01,0.5))
     clickOK()
 def attack():
-    pyautogui.screenshot()
     check = pyautogui.locateCenterOnScreen(".\Screenshot\\attack.PNG")
     while check is None:
-        pyautogui.screenshot()
         check = pyautogui.locateCenterOnScreen(".\Screenshot\\attack.PNG")
     pyautogui.click(check,duration=random.uniform(0.01,0.5))
     time.sleep(2)
@@ -48,11 +39,11 @@ def back():
     time.sleep(2)
 def waitForRaidEnd():
     while pyautogui.locateCenterOnScreen(".\Screenshot\end.PNG") is None:
-        pyautogui.screenshot()
+        time.sleep(1)
 
 #======================== Setting ==============================
 #Summon to call
-summonName = "huanglong"
+summon = "huanglong"
 #How many run
 count = 404040
 #Link
@@ -67,13 +58,15 @@ while i<=count:
 
 
     #====================== Fight Start ====================#
-    selectName(Name)
+    selectSummon(summon)
     clickOK()
-    NameCall(Name)
+    summonCall(summon)
     back()
     attack()
+
     back()
     attack()
+    
     back()
     waitForRaidEnd()
     webbrowser.open(fight, new=2)
