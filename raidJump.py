@@ -1,88 +1,148 @@
-import  pyautogui,webbrowser,time,random,sys,pyperclip
+import  webbrowser,time,random,sys,pyperclip,pygetwindow
+import pyautogui as auto
 
 def attack():
-    pyautogui.screenshot()
-    check = pyautogui.locateCenterOnScreen(".\Screenshot\\attack.PNG")
+    auto.screenshot()
+    check = auto.locateCenterOnScreen(".\Screenshot\\attack.PNG")
     while check is None:
-        pyautogui.screenshot()
-        check = pyautogui.locateCenterOnScreen(".\Screenshot\\attack.PNG")
-    pyautogui.click(check,duration=random.uniform(0.01,0.5))
+        check = auto.locateCenterOnScreen(".\Screenshot\\attack.PNG")
+    auto.click(check,duration=random.uniform(0.01,0.5))
+    time.sleep(1)
 def selectSummon(summonName):
     print('in Select Summon')
-    shot = pyautogui.screenshot()
-    check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG")
-    if check!=None:
-        pyautogui.click(check,duration=random.uniform(0.01,0.5))
+    check = auto.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG",confidence=0.9)
+    time.sleep(2)
     while check == None:
-        pyautogui.scroll(-100)
-        shot = pyautogui.screenshot()
-        check = pyautogui.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG")
-    pyautogui.click(check,duration=random.uniform(0.01,0.5))
+        auto.scroll(-100)
+        check = auto.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG",confidence=0.9)
+    auto.click(check,duration=random.uniform(0.01,0.5))
+    clickOK()
 def clickOK():
-    shot = pyautogui.screenshot()
-    check = pyautogui.locateCenterOnScreen(".\Screenshot\ok.PNG",confidence=0.5)
+    check = auto.locateCenterOnScreen(".\Screenshot\ok.PNG",confidence=0.9)
     if check!=None:
-        pyautogui.click(check,duration=random.uniform(0.01,0.5))
+        auto.click(check,duration=random.uniform(0.01,0.5))
     while check is None:
-        pyautogui.scroll(-100)
-        shot = pyautogui.screenshot()
-        check = pyautogui.locateOnScreen(".\Screenshot\ok.PNG")
-    pyautogui.click(check,duration=random.uniform(0.01,0.5))
+        auto.scroll(-100)
+        check = auto.locateOnScreen(".\Screenshot\ok.PNG")
+    auto.click(check,duration=random.uniform(0.01,0.5))
+    time.sleep(3)
 def getReward():
-    print("in get reward")
-    pyautogui.click(pyautogui.locateCenterOnScreen(".\Screenshot\check.PNG"))
+    auto.click(auto.locateCenterOnScreen(".\Screenshot\check.PNG",confidence=0.8))
     time.sleep(2)
-    pyautogui.moveTo(pyautogui.locateCenterOnScreen(".\Screenshot\pending.PNG"))
-    pyautogui.click(pyautogui.move(0,50))
+    auto.moveTo(auto.locateCenterOnScreen(".\Screenshot\pending.PNG"))
+    auto.click(auto.move(0,50))
     time.sleep(2)
-    pyautogui.hotkey('alt','left')
-    pyautogui.hotkey('alt','left')
+    auto.hotkey('alt','left')
+    auto.hotkey('alt','left')
+def cha1Cast1():
+    while auto.locateCenterOnScreen(".\Screenshot\\1st.PNG",confidence=0.5) == None:
+        time.sleep(0.5)
+    auto.click(auto.locateCenterOnScreen(".\Screenshot\\1st.PNG",confidence=0.5),clicks=2)
+    time.sleep(0.2)
+    auto.moveTo(auto.locateCenterOnScreen(".\Screenshot\skillInBar.PNG"))
+    time.sleep(0.2)
+    auto.click(auto.move(30,30))
+    auto.click(auto.locateCenterOnScreen(".\Screenshot\\backButton.PNG"))
+    time.sleep(0.5)
+def cha1Cast2():
+    while auto.locateCenterOnScreen(".\Screenshot\\1st.PNG",confidence=0.5) == None:
+        time.sleep(0.5)
+    auto.click(auto.locateCenterOnScreen(".\Screenshot\\1st.PNG",confidence=0.5))
+    time.sleep(0.2)
+    auto.moveTo(auto.locateCenterOnScreen(".\Screenshot\skillInBar.PNG"))
+    time.sleep(0.2)
+    auto.click(auto.move(90,30))
+    auto.click(auto.locateCenterOnScreen(".\Screenshot\\backButton.PNG"))
+    time.sleep(0.5)
+def back():
+    auto.click(auto.locateCenterOnScreen(".\Screenshot\\back.PNG"))
+    time.sleep(2)
+def summonCall(summon):
+    check = auto.locateCenterOnScreen(".\Screenshot\summonTab.PNG")
+    while check == None:
+        check = auto.locateCenterOnScreen(".\Screenshot\summonTab.PNG")
+    time.sleep(2)
+    auto.click(check,duration=random.uniform(0.01,0.5))
+    check = auto.locateCenterOnScreen(".\Screenshot\\"+summon+"Call.PNG")
+    while check == None:
+        check = auto.locateCenterOnScreen(".\Screenshot\\"+summon+"Call.PNG")
+    auto.click(check,duration=random.uniform(0.01,0.5))
+    clickOK()
 #========= Option =========#
 callSummon = "kaguya"
-run=30
+run=300000
 i=0
 joined =0
 while i!=run:
-    if pyautogui.locateCenterOnScreen(".\Screenshot\check.PNG") != None:
-        getReward()
+    if auto.locateCenterOnScreen(".\Screenshot\check.PNG") != None:
+        while auto.locateCenterOnScreen(".\Screenshot\check.PNG") != None:
+            getReward()
+            auto.locateCenterOnScreen(".\Screenshot\check.PNG")
+            time.sleep(1)
     elif joined != 3:
         #===========RaidFinder========#
-        pyautogui.moveTo(pyautogui.locateCenterOnScreen(".\Screenshot\moreOptionIcon.PNG"))
-        print("1")
-        pyautogui.click(pyautogui.move(0,80))
+        auto.moveTo(auto.locateCenterOnScreen(".\Screenshot\\moreOptionIcon.PNG",confidence=0.9))
+        time.sleep(0.5)
+        auto.click(auto.move(0,80))
         time.sleep(0.5)
         #========GameClients==========#
-        print('click Vee')
-        pyautogui.click(pyautogui.locateCenterOnScreen(".\Screenshot\\vee.PNG"))
-        pyautogui.click(pyautogui.locateCenterOnScreen(".\Screenshot\enterID.PNG"))
-        pyautogui.moveTo(pyautogui.locateCenterOnScreen(".\Screenshot\joinARoom.PNG"))
-        pyautogui.click(pyautogui.move(-250,0))
-        pyautogui.hotkey('ctrl', 'v')
+        print("click enterID")
+        auto.click(auto.locateCenterOnScreen(".\Screenshot\\enterID.PNG",confidence=0.9))
+        time.sleep(1)
+        print("click Join a room")
+        auto.moveTo(auto.locateCenterOnScreen(".\Screenshot\\joinARoom.PNG",confidence=0.7))
+        print("move down")
+        auto.click(auto.move(-250,0))
+        time.sleep(1)
+        print("pasted")
+        auto.hotkey('ctrl','v')
         time.sleep(1)
         print('click join')
-        if pyautogui.locateCenterOnScreen(".\Screenshot\dupeRaid.PNG") == None :
-            if pyautogui.locateCenterOnScreen(".\Screenshot\ended.PNG") == None:
-                pyautogui.click(pyautogui.locateCenterOnScreen(".\Screenshot\joinARoom.PNG"))
-                pyautogui.click(pyautogui.locateCenterOnScreen(".\Screenshot\joinARoom.PNG"))
-                time.sleep(1)
-                #=====SelectSummon=====#
-                selectSummon(callSummon)
-                clickOK()
+        auto.click(auto.locateCenterOnScreen(".\Screenshot\\joinARoom.PNG",confidence=0.7))
+        print(auto.locateCenterOnScreen(".\Screenshot\\joinARoom.PNG",confidence=0.7))
+        if auto.locateCenterOnScreen(".\Screenshot\\raidNoti.PNG",confidence=0.8) == None and auto.locateCenterOnScreen(".\Screenshot\\battleNoti.PNG",confidence=0.8) == None:
+            print("Joinning")
+            time.sleep(1)
+            #=====SelectSummon=====#
+            selectSummon(callSummon)
+            time.sleep(0.5)
+            if auto.locateCenterOnScreen(".\Screenshot\\raidNoti.PNG",confidence=0.8) == None and auto.locateCenterOnScreen(".\Screenshot\\battleNoti.PNG",confidence=0.8) == None:
                 #===== Timeline =====#
+                print("jumpStart")
+                check = auto.locateCenterOnScreen(".\Screenshot\\attack.PNG")
+                while check == None:
+                    check = auto.locateCenterOnScreen(".\Screenshot\\attack.PNG")
+                # time.sleep(2)
+                # cha1Cast1()
+                # cha1Cast2()
+                # time.sleep(3)
                 attack()
-                pyautogui.hotkey('alt','left')
-                pyautogui.hotkey('alt','left')
-                time.sleep(1)
-                pyautogui.scroll(-100)
-                joined = len(list(pyautogui.locateAllOnScreen(".\Screenshot\joined.PNG")))
+                time.sleep(0.5)
+                auto.click(auto.locateCenterOnScreen(".\Screenshot\\raidButton.PNG"))
+                auto.move(0,50)
+                if auto.locateCenterOnScreen(".\Screenshot\check.PNG") != None:
+                    while auto.locateCenterOnScreen(".\Screenshot\check.PNG") != None:
+                        getReward()
+                        time.sleep(1)
+                time.sleep(2)
+                auto.scroll(-100)
+                joined = len(list(auto.locateAllOnScreen(".\Screenshot\joined.PNG")))
+                print(joined)
+                print("JumpEND")
         else:
-            pyautogui.hotkey('f5')
+            print ("in Reload")
+            auto.click(auto.locateCenterOnScreen(".\Screenshot\\raidButton.PNG"))
+            auto.move(0,50)
+            time.sleep(3)
     else:
         while joined == 3:
+            if auto.locateCenterOnScreen(".\Screenshot\check.PNG") != None:
+                while auto.locateCenterOnScreen(".\Screenshot\check.PNG") != None:
+                    getReward()
+                    time.sleep(1)
+            print ("Check Dupe")
+            auto.hotkey('f5')
             time.sleep(5)
-            pyautogui.hotkey('f5')
-            time.sleep(1)
-            pyautogui.scroll(-100)
-            joined = len(list(pyautogui.locateAllOnScreen(".\Screenshot\joined.PNG")))
-    i+=1
+            auto.scroll(-100)
+            joined = len(list(auto.locateAllOnScreen(".\Screenshot\joined.PNG")))
     
