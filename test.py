@@ -1,6 +1,9 @@
-import pyautogui,pygetwindow
+import pyautogui as auto
+import pygetwindow,time
 
-win=pygetwindow.getWindowsWithTitle('New Tab')[0]
-win.activate()
-pyautogui.click(pyautogui.locateCenterOnScreen(".\\test\\yt.PNG"))
-pyautogui.click(pyautogui.locateCenterOnScreen(".\\test\\yt.PNG"))
+auto.moveTo(auto.locateCenterOnScreen(".\Screenshot\\ifritNM.PNG",confidence=0.8))
+print("move down")
+auto.click(auto.move(275,30))
+time.sleep(0.5)
+auto.click(auto.locateCenterOnScreen(".\Screenshot\\claimLoot.PNG",confidence=0.8))
+
