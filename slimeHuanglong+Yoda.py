@@ -1,5 +1,4 @@
 import pyautogui as auto
-import pydirectinput
 import webbrowser,time,random,sys,pygetwindow
 
 def macroButton():
@@ -12,8 +11,8 @@ def selectSummon(summonName):
     else:
         while check == None:
             auto.scroll(-200)
-            time.sleep(0.5)
-            check = auto.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG",confidence=0.95)
+            time.sleep(2)
+            check = auto.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG",confidence=0.8)
     auto.click(check,duration=random.uniform(0.01,0.5))
     auto.click(check)
 def clickOK(): 
@@ -37,16 +36,15 @@ def summonCall(summon):
     auto.click(check,duration=random.uniform(0.01,0.5))
     clickOK()
 def attack():
-    check = auto.locateCenterOnScreen(".\Screenshot\\attack.PNG")
+    check = auto.locateCenterOnScreen(".\Screenshot\\attack.PNG",confidence=0.9)
     while check is None:
         print("check attack")
-        check = auto.locateCenterOnScreen(".\Screenshot\\attack.PNG")
+        check = auto.locateCenterOnScreen(".\Screenshot\\attack.PNG",confidence=0.9)
     auto.click(check,duration=random.uniform(0.01,0.5))
     time.sleep(2)
 def back():
     print("press back")
-    auto.move(auto.locateCenterOnScreen(".\Screenshot\\back.PNG"))
-    auto.click(auto.locateCenterOnScreen(".\Screenshot\\back.PNG"))
+    auto.click(auto.locateCenterOnScreen(".\Screenshot\\back.PNG",confidence=0.8))
     time.sleep(2)
 def waitForRaidEnd():
     while auto.locateCenterOnScreen(".\Screenshot\end.PNG",confidence=0.8) is None:
@@ -156,9 +154,9 @@ while i<=count:
     sys.stdout.write("Running Round "+str(i+1)+"\n")
     win=pygetwindow.getWindowsWithTitle('Granblue Fantasy')[0]
     win.activate()
-    while auto.locateCenterOnScreen(".\Screenshot\\vee.PNG") == None:
-        auto.locateCenterOnScreen(".\Screenshot\\vee.PNG")
-    auto.click(auto.locateCenterOnScreen(".\Screenshot\\vee.PNG"),clicks=2)
+    while auto.locateCenterOnScreen(".\Screenshot\\vee.PNG",confidence=0.8) == None:
+        auto.locateCenterOnScreen(".\Screenshot\\vee.PNG",confidence=0.8)
+    auto.click(auto.locateCenterOnScreen(".\Screenshot\\vee.PNG",confidence=0.8),clicks=2)
     selectSummon(summon)
     clickOK()
     #====================== Fight Start ====================#
@@ -172,6 +170,7 @@ while i<=count:
     back()
     print("attack2 start")
     attack()
+    time.sleep(3)
     print("attack2 end")
     back()
     print("waitend")
