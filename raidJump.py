@@ -53,8 +53,7 @@ def getReward():
     auto.moveTo(auto.locateCenterOnScreen(".\Screenshot\pending.PNG"))
     auto.click(auto.move(0,50))
     time.sleep(2)
-    auto.hotkey('alt','left')
-    auto.hotkey('alt','left')
+    auto.click(auto.locateCenterOnScreen(".\Screenshot\\raidButton.PNG",confidence=0.8))
 def fullAuto():
     print ("Start Full Auto...")
     wait = 0
@@ -212,21 +211,13 @@ while i!=run:
             time.sleep(1)
             #=====SelectSummon=====#
             selectSummon(callSummon,callSummon2)
-            time.sleep(0.5)
             time.sleep(1)
             if auto.locateCenterOnScreen(".\Screenshot\\raidNoti.PNG",confidence=0.8) == None and auto.locateCenterOnScreen(".\Screenshot\\battleNoti.PNG",confidence=0.8) == None:
                 #===== Timeline =====#
                 print("Fight")
                 # auto.scroll(-100)
-                # time.sleep(2)
                 fullAuto()
-                back()
-                fullAuto()
-                back()
-                fullAuto()
-                back()
-                fullAuto()
-                back()
+                time.sleep(14)
                 # fullAuto()
                 # back()
                 # fullAuto()

@@ -24,6 +24,7 @@ def selectSummon(summonName, summonName2):
     time.sleep(2)
     while check == None and check2 == None:
         auto.scroll(-100)
+        time.sleep(0.25)
         check = auto.locateCenterOnScreen(
             ".\Screenshot\\"+summonName+".PNG", confidence=0.9)
         check2 = auto.locateCenterOnScreen(
@@ -123,7 +124,12 @@ def back():
         ".\Screenshot\\back.PNG", confidence=0.9))
     time.sleep(2)
 def waitForRaidEnd():
+    print("wait for raid end")
     while auto.locateCenterOnScreen(".\Screenshot\end.PNG", confidence=0.7) is None:
+        time.sleep(1)
+def waitForRaidEndNegima():
+    print("wait for raid end")
+    while auto.locateCenterOnScreen(".\Screenshot\endNegima.PNG", confidence=0.7) is None:
         time.sleep(1)
 def cha1Cast1():
     while auto.locateCenterOnScreen(".\Screenshot\\1st.PNG", confidence=0.7) is None:
@@ -284,7 +290,7 @@ def semiAuto():
     while auto.locateCenterOnScreen(".\Screenshot\\attack.PNG", confidence=0.7) is None:
         time.sleep(1)
         wait += 1
-        if wait >= 6:
+        if wait >= 8:
             auto.click(auto.locateCenterOnScreen(
                 ".\Screenshot\\reload.PNG", confidence=0.7))
             wait = 0
@@ -301,7 +307,7 @@ def fullAuto():
         time.sleep(1)
         wait += 1
         if wait >= 6:
-            print("waited: "+wait)
+            print("waited: "+str(wait))
             auto.click(auto.locateCenterOnScreen(
                 ".\Screenshot\\reload.PNG", confidence=0.7))
             wait = 0
@@ -315,9 +321,9 @@ def fullAuto():
 
 # ======================== Setting ==============================
 # Summon to call
-callSummon = "huanglong"
-# callSummon = "lucifer250"
-callSummon2 = "bahamut250"
+# callSummon = "huanglong"
+callSummon = "kaguya250"
+callSummon2 = "kaguya"
 # How many run
 count = 9000
 
@@ -348,15 +354,16 @@ while i < count:
     # cha3Cast2()
     # cha4Cast3()
     # attack()
-    fullAuto()
-    # cha2Cast3()
-    # time.sleep(4)
-    back()
-    # semiAuto()
+    # fullAuto()
+    # time.sleep(8)
+    # back()
+    
+    semiAuto()
     # quickSummonV2()
     # cha1Cast1()
     # cha1Cast2()
-    # cha1Cast3()
+    # cha1Cast4()
+    # cha2Cast1()
     # time.sleep(4)
     # summonCall(summon)
     # time.sleep(1)
@@ -367,6 +374,7 @@ while i < count:
     # # ==== Turn 2 ====
     # attack()
     # print("Attack 2")
+    # waitForRaidEndNegima()
     waitForRaidEnd()
     time.sleep(1)
     macroButton()    

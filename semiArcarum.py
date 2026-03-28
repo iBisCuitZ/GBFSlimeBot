@@ -1,9 +1,10 @@
 import pyautogui as auto
 import webbrowser,time,random,sys,pygetwindow
+
 def checkPot():
     if(auto.locateCenterOnScreen(".\Screenshot\\needPot.png",confidence=0.9)):
         auto.moveTo(auto.locateCenterOnScreen(".\Screenshot\\halfElixir.png",confidence=0.9))
-        auto.click(auto.move(50,100))
+        auto.click(auto.move(50,130))
         time.sleep(1)
         # auto.click(auto.locateCenterOnScreen(".\Screenshot\\dropdown.png",confidence=0.9))
         auto.click(auto.locateCenterOnScreen(".\Screenshot\\13.png",confidence=0.9))
@@ -271,12 +272,13 @@ def fullAuto():
     auto.click(auto.locateCenterOnScreen(".\Screenshot\\full.PNG",confidence=0.7))
 #======================== Setting ==============================
 #Summon to call
-callSummon = "lucifer"
-callSummon2 = "chevalier"
+callSummon = "huanglong"
+callSummon2 = "kaguya"
 #How many run
 count = 9999
 #============================================================
 i=1
+sys.stdout.write("START")
 while i<=count:
     win=pygetwindow.getWindowsWithTitle('Granblue Fantasy')[0]
     print(win)
@@ -286,24 +288,24 @@ while i<=count:
     time.sleep(2)
     checkPot()
     #====================== Fight Start ====================#
-    time.sleep(4)
+    time.sleep(3)
     # cha4Cast2()
-    # semiAuto()
+    semiAuto()
     # cha1Cast1()
     # fullAuto()
     # cha1Cast2()
-    attack()
+    # time.sleep(5)
+    # attack()
     # time.sleep(17)
     # quickSummon()
     # cha4Cast3()
     # cha4Cast3()
     # attack()
-    back()
+    # back()
     # cha1Cast3()
     # cha1Cast3()
     # time.sleep(6)
     # summonCall(summon)
-    # time.sleep(1)
     # attack()
     # back()
     # cha4Cast3()

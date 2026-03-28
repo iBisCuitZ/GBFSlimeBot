@@ -7,13 +7,13 @@ def selectSummon(summonName):
     check = auto.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG")
     print("in selectSummon()")
     if check!=None:
-        auto.click(check,duration=random.uniform(0.01,0.5))
+        auto.click(check,duration=random.uniform(0.01,0.3))
     else:
         while check == None:
             auto.scroll(-200)
-            time.sleep(2)
+            time.sleep(1)
             check = auto.locateCenterOnScreen(".\Screenshot\\"+summonName+".PNG",confidence=0.8)
-    auto.click(check,duration=random.uniform(0.01,0.5))
+    auto.click(check,duration=random.uniform(0.01,0.3))
     auto.click(check)
 def clickOK(): 
     check = auto.locateCenterOnScreen(".\Screenshot\ok.PNG",confidence=0.8)
