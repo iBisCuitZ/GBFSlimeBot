@@ -105,30 +105,38 @@ def getReward():
 def fullAuto():
     print("Start Full Auto...")
     wait = 0
-    done = 0
-    while auto.locateCenterOnScreen(".\Screenshot\\attack.PNG", confidence=0.8) is None and done == 0:
-        # Check if the raid is ended. If it's ended go to else. If not check for loop condition (attack button exist)
-        if auto.locateCenterOnScreen(".\Screenshot\end.PNG", confidence=0.8) is None and auto.locateCenterOnScreen(".\Screenshot\end2.PNG", confidence=0.8) is None:
-            print("CheckFull-AttackLoop")
-            time.sleep(1)
-            wait += 1
-            if wait >= 6:
-                auto.click(auto.locateCenterOnScreen(
-                    ".\Screenshot\\reload.PNG", confidence=0.7))
-                wait = 0
-        else:
-            print("in else?")
-            done = 1
-        # time.sleep(3)
-        # auto.click(auto.locateCenterOnScreen(".\Screenshot\\attack.PNG",confidence=0.7))
-    if done == 0:
-        print("BugSure")
-        time.sleep(round(random.uniform(0.5, 1), 2))
-        auto.click(auto.locateCenterOnScreen(
-            ".\Screenshot\\full.PNG", confidence=0.7))
-        time.sleep(round(random.uniform(0.5, 1), 2))
-    print("BugPa")
-    done = 1
+    timeout = time.time() + 300  # 5 minute timeout
+
+    while time.time() < timeout:
+        # Check if raid ended
+        end_screen = auto.locateCenterOnScreen(
+            f"{SCREENSHOT_PATH}end.PNG", confidence=0.8)
+        end_screen2 = auto.locateCenterOnScreen(
+            f"{SCREENSHOT_PATH}end2.PNG", confidence=0.8)
+
+        if end_screen or end_screen2:
+            print("Raid ended")
+            break
+
+        # Check if attack button exists
+        attack_btn = auto.locateCenterOnScreen(
+            f"{SCREENSHOT_PATH}attack.PNG", confidence=0.8)
+        if attack_btn:
+            print("Attack button found, clicking full auto")
+            time.sleep(round(random.uniform(0.5, 1), 2))
+            safe_click(auto.locateCenterOnScreen(
+                f"{SCREENSHOT_PATH}full.PNG", confidence=0.7))
+            break
+
+        # Waiting for action, reload if timeout
+        print("CheckFull-AttackLoop")
+        time.sleep(1)
+        wait += 1
+        if wait >= 6:
+            print("Reloading...")
+            safe_click(auto.locateCenterOnScreen(
+                f"{SCREENSHOT_PATH}reload.PNG", confidence=0.7))
+            wait = 0
 
 
 def cha1Cast1():
@@ -235,7 +243,9 @@ def cha3Cast3():
 
 def back():
     print("click back button")
-    auto.click(auto.locateCenterOnScreen(".\Screenshot\\back.PNG"))
+    auto.click(auto.locateCenterOnScreen(
+        f"{SCREENSHOT_PATH}back.PNG", confidence=0.8))
+    time.sleep(1)
 
 
 def reload():
@@ -319,8 +329,6 @@ while i != run:
             print("Joining")
             time.sleep(1)
             clickOK()
-            time.sleep(1)
-
             # Re-check images AFTER clickOK
             raidNoti = auto.locateCenterOnScreen(
                 f"{SCREENSHOT_PATH}raidNoti.PNG", confidence=0.9)
@@ -332,11 +340,15 @@ while i != run:
             print("Check raidNoti, battleNoti, noroom after clickOK joining")
             if not raidNoti and not battleNoti and not noroom:
                 print("Fight")
+                time.sleep(2)
+                back()
+                # time.sleep(3)
                 fullAuto()
-                time.sleep(40)
-                fullAuto()
-                time.sleep(20)
-                auto.click(auto.locateCenterOnScreen(
+                time.sleep(5)
+                # back()
+                # fullAuto()
+                # time.sleep(40)
+                safe_click(auto.locateCenterOnScreen(
                     f"{SCREENSHOT_PATH}raidButton.PNG", confidence=0.8))
                 # cha1Cast1()
                 # time.sleep(0.8)

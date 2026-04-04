@@ -70,6 +70,34 @@ def clickOK():
     auto.click(check, duration=random.uniform(0.01, 0.5))
 
 
+def clickSkip():
+    while auto.locateCenterOnScreen(".\Screenshot\loading.PNG", confidence=0.8) is not None:
+        time.sleep(0.1)
+    check = auto.locateCenterOnScreen(
+        ".\Screenshot\skipButton.PNG", confidence=0.8)
+    if check != None:
+        auto.click(check, duration=random.uniform(0.01, 0.5))
+    while check is None:
+        auto.scroll(-100)
+        time.sleep(0.1)
+        check = auto.locateOnScreen(
+            ".\Screenshot\skipButton.PNG", confidence=0.8)
+    auto.click(check, duration=random.uniform(0.01, 0.5))
+
+
+def clickSkipBlue():
+    check = auto.locateCenterOnScreen(
+        ".\Screenshot\skipButtonBlue.PNG", confidence=0.8)
+    if check != None:
+        auto.click(check, duration=random.uniform(0.01, 0.5))
+    while check is None:
+        auto.scroll(-100)
+        time.sleep(0.1)
+        check = auto.locateOnScreen(
+            ".\Screenshot\skipButtonBlue.PNG", confidence=0.8)
+    auto.click(check, duration=random.uniform(0.01, 0.5))
+
+
 def summonCall(summon):
     # Wait for summonTab with timeout, click refresh if not found
     check = wait_for_image("summonTab", confidence=0.8, timeout=10)
@@ -288,6 +316,14 @@ def fullAuto():
     time.sleep(round(random.uniform(0.5, 1), 2) / 2)
 
 
+def getGem():
+    while auto.locateCenterOnScreen(".\\test\\gem.png", confidence=0.9) is None:
+        time.sleep(1)
+        auto.scroll(-200)
+    auto.click(auto.locateCenterOnScreen(
+        ".\\test\\gem.png", confidence=0.9))
+
+
 # ======================== Setting ==============================
 # Summon to call
 summon = "huanglong"
@@ -305,23 +341,20 @@ while i <= count:
     #     auto.locateCenterOnScreen(".\Screenshot\\vee.PNG",confidence=0.8)
     # auto.click(auto.locateCenterOnScreen(".\Screenshot\\vee.PNG",confidence=0.8),clicks=2)
     # selectSummon(summon)
-    clickOK()
-    # ====================== Fight Start ====================#
-    # summonCall(summon)
-    # time.sleep(4)
-    # fullAuto()
-    # attack()
-
-    # ///////////////////// SLIME /////////////////////
-    attack()
-    back()
-    attack()
-    back()
-    # attack()
-    # back()
-    print("waitend")
-    # ///////////////////////////////////////////////////////////////
-    waitForRaidEnd()
+    # print("TO CLICK OK")
+    # clickOK()
+    # time.sleep(2)
+    # print("TO CLICK SKIP")
+    # clickSkip()
+    # time.sleep(0.5)
+    # print("TO CLICK SKIP BLUE")
+    # clickSkipBlue()
+    # time.sleep(0.5)
+    getGem()
+    time.sleep(3)
+    clickSkip()
+    clickSkipBlue()
+    time.sleep(2)
     macroButton()
     # ============================= Fight END ================#
     i += 1
